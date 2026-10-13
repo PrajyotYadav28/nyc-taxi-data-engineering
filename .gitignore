@@ -1,0 +1,32 @@
+
+# Python cache files
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Raw and processed datasets
+data/raw/
+data/processed/
+
+# Credentials and environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+
+# Temporary files
+*.tmp
