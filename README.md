@@ -63,25 +63,51 @@ nyc-taxi-data-engineering/
 
 ## How to Run
 
-1. Install Python and PostgreSQL.
-2. Install the required Python packages:
+### Prerequisites
+- Python 3.10 or later
+- PostgreSQL
+- Power BI Desktop (to view the dashboard)
 
-   ```bash
-   pip install pandas pyarrow "psycopg[binary]"
-   ```
+### 1. Install Python dependencies
 
-3. Configure the PostgreSQL connection settings in the loader scripts.
-4. Place the source Parquet dataset in `data/raw/`.
-5. Create the required PostgreSQL database and analytics tables.
-6. Run the complete pipeline from the project root:
+```bash
+pip install pandas pyarrow "psycopg[binary]"
+```
 
-   ```bash
-   python src/run_pipeline.py
-   ```
+### 2. Prepare the dataset
 
-7. Open `NYC_Taxi_Analytics_Dashboard.pbix` in Power BI Desktop.
+Download the NYC Yellow Taxi trip dataset for January 2024 in Parquet format and place it at:
 
-The loader scripts request the PostgreSQL password at runtime.
+`data/raw/yellow_tripdata_2024-01.parquet`
+
+### 3. Configure PostgreSQL
+
+Create a PostgreSQL database named `nyc_taxi_db` and create the required analytics tables before running the pipeline.
+
+The loader scripts use the following local connection settings by default:
+
+- Host: `localhost`
+- Port: `5432`
+- Database: `nyc_taxi_db`
+- User: `postgres`
+
+Update `DB_CONFIG` in the loader scripts if your local PostgreSQL settings differ. The scripts prompt for the database password at runtime; do not store passwords in source code.
+
+### 4. Run the pipeline
+
+From the project root directory, execute:
+
+```bash
+python src/run_pipeline.py
+```
+
+The pipeline extracts and transforms the data, generates daily and hourly analytics, runs data quality checks, and loads the analytics into PostgreSQL.
+
+### 5. View the dashboard
+
+Open `NYC_Taxi_Analytics_Dashboard.pbix` using Power BI Desktop.
+
+**Note:** The PostgreSQL analytics tables must exist before running the loader scripts.
 
 ## Learning Outcomes
 
@@ -109,4 +135,4 @@ The loader scripts request the PostgreSQL password at runtime.
 
 ## Dashboard Preview
 
-![NYC Taxi Analytics Dashboard](dashboard.png)
+![NYC Taxi Analytics Dashboard](dashboard.png) Prajyot@2811
