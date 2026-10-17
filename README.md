@@ -105,3 +105,8 @@ The loader scripts request the PostgreSQL password at runtime.
 **Project Type:** Data Engineering  
 **Dataset Period:** January 2024  
 **Visualization:** Power BI
+
+
+## Dashboard Preview
+
+![NYC Taxi Analytics Dashboard](dashboard.png)
