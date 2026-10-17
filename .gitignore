@@ -21,6 +21,9 @@ data/processed/
 # Logs
 *.log
 
+# Pipeline logs
+logs/
+
 # Operating system files
 .DS_Store
 Thumbs.db
