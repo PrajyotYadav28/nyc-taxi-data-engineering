@@ -20,9 +20,9 @@ def load_daily_analytics():
 
     print("Rows in CSV:", len(df))
 
-    password = input("Enter your PostgreSQL password: ")
+    password = None
 
-    with psycopg.connect(password=password, **DB_CONFIG) as conn:
+    with psycopg.connect(**DB_CONFIG) as conn:
         with conn.cursor() as cur:
             cur.executemany(
                 """

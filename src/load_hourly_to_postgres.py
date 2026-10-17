@@ -24,9 +24,9 @@ def load_hourly_analytics():
     df = pd.read_csv(CSV_FILE)
     print("Rows in CSV:", len(df))
 
-    password = input("Enter your PostgreSQL password: ")
+    password = None
 
-    with psycopg.connect(password=password, **DB_CONFIG) as conn:
+    with psycopg.connect(**DB_CONFIG) as conn:
         with conn.cursor() as cur:
             cur.executemany(
                 """
