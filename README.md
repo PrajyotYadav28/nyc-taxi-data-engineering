@@ -17,12 +17,21 @@ The project processes NYC taxi trip data to identify daily travel patterns, hour
 
 ## Pipeline Workflow
 
-1. **Extract:** Read the raw January 2024 Yellow Taxi Parquet dataset.
-2. **Transform:** Remove invalid timestamps, non-positive trip distances, and non-positive fares; calculate trip duration and extract pickup hour and date.
-3. **Analyze:** Generate hourly and daily taxi analytics.
-4. **Validate:** Check duplicates, missing values, invalid durations, and other data-quality issues.
-5. **Load:** Store daily and hourly summary data in PostgreSQL.
-6. **Visualize:** Connect Power BI to PostgreSQL and build an interactive dashboard.
+Extract: Read the raw January 2024 NYC Yellow Taxi Parquet dataset.
+
+Transform: Clean invalid records and derive trip duration, pickup hour, and pickup date.
+
+Analyze: Generate daily and hourly taxi analytics.
+
+Validate: Run data-quality checks on duplicates, missing values, and invalid records.
+
+Load: Load daily and hourly summary data into PostgreSQL.
+
+Log: Record pipeline progress, successful steps, and errors in logs/pipeline.log.
+
+Automate: Use Windows Task Scheduler to run the pipeline automatically.
+
+Visualize: Explore taxi demand and fare trends in Power BI.
 
 ## Project Structure
 
@@ -63,51 +72,55 @@ nyc-taxi-data-engineering/
 
 ## How to Run
 
-### Prerequisites
-- Python 3.10 or later
-- PostgreSQL
-- Power BI Desktop (to view the dashboard)
+Prerequisites
 
-### 1. Install Python dependencies
+Python 3.10 or later
 
-```bash
+PostgreSQL
+
+Power BI Desktop (to open the dashboard)
+
+1. Install dependencies
+
+Run this command from the project root:
+
 pip install pandas pyarrow "psycopg[binary]"
-```
 
-### 2. Prepare the dataset
+2. Prepare the dataset
 
-Download the NYC Yellow Taxi trip dataset for January 2024 in Parquet format and place it at:
+Place the January 2024 NYC Yellow Taxi Parquet dataset at:
 
-`data/raw/yellow_tripdata_2024-01.parquet`
+data/raw/yellow_tripdata_2024-01.parquet
 
-### 3. Configure PostgreSQL
+3. Configure PostgreSQL
 
-Create a PostgreSQL database named `nyc_taxi_db` and create the required analytics tables before running the pipeline.
+Create a database named nyc_taxi_db and ensure the required analytics tables are available.
 
-The loader scripts use the following local connection settings by default:
+The default local connection settings are:
 
-- Host: `localhost`
-- Port: `5432`
-- Database: `nyc_taxi_db`
-- User: `postgres`
+Host: localhost
 
-Update `DB_CONFIG` in the loader scripts if your local PostgreSQL settings differ. The scripts prompt for the database password at runtime; do not store passwords in source code.
+Port: 5432
 
-### 4. Run the pipeline
+Database: nyc_taxi_db
 
-From the project root directory, execute:
+User: postgres
 
-```bash
+Update DB_CONFIG in the loader scripts if your settings differ.
+
+For unattended local execution, configure PostgreSQL password authentication using a properly secured PostgreSQL password file (pgpass.conf). Do not put database passwords in source code or commit password files to GitHub.
+
+4. Run the pipeline
+
+From the project root, execute:
+
 python src/run_pipeline.py
-```
 
-The pipeline extracts and transforms the data, generates daily and hourly analytics, runs data quality checks, and loads the analytics into PostgreSQL.
+The pipeline runs extraction, transformation, analytics, data-quality checks, and PostgreSQL loading. Execution progress and errors are recorded in logs/pipeline.log.
 
-### 5. View the dashboard
+5. View the dashboard
 
-Open `NYC_Taxi_Analytics_Dashboard.pbix` using Power BI Desktop.
-
-**Note:** The PostgreSQL analytics tables must exist before running the loader scripts.
+Open NYC_Taxi_Analytics_Dashboard.pbix in Power BI Desktop. Ensure the PostgreSQL connection settings are correct if you refresh the dashboard.
 
 ## Learning Outcomes
 
@@ -120,13 +133,13 @@ Open `NYC_Taxi_Analytics_Dashboard.pbix` using Power BI Desktop.
 
 ## Future Improvements
 
-- Automate scheduled pipeline execution.
-- Add stronger data-quality rules and logging.
-- Process additional months of taxi data.
-- Deploy the pipeline to a cloud platform.
-- Improve dashboard design and analytical measures.
+Process additional months of taxi data.
 
----
+Add automated tests and more comprehensive data-quality rules.
+
+Deploy the pipeline to a cloud platform.
+
+
 
 **Project Type:** Data Engineering  
 **Dataset Period:** January 2024  
